@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import Header from './components/Header'
 import Form from './components/Form'
 import shortid from 'shortid';
@@ -6,14 +6,39 @@ import ListPhrases from './components/ListPhrases'
 
 function App() {
 
-  const [arrayPhrases, setArrayPhrases] = useState([]);
+  const [loadPhrases, setLoadPhrases] = useState(false);
+  const [allPhrases, setAllPhrases] = useState([]);
+
+  useEffect(() => {
+    const array = JSON.parse(localStorage.getItem('arrayText'));
+    if (array.length === 0) return;
+    setAllPhrases(array);
+  }, [])
+
+  useEffect(() => {
+    const array = JSON.parse(localStorage.getItem('arrayText'));
+    setAllPhrases(array);
+    setLoadPhrases(false);
+
+  }, [loadPhrases])
+
+  useEffect(() => {
+    if (allPhrases.length === 0) return;
+    localStorage.setItem('arrayText', JSON.stringify(allPhrases));
+    setLoadPhrases(true);
+
+  }, [allPhrases])
 
   const getData = (data) => {
     data.id = shortid.generate();
-    setArrayPhrases([
-      ...arrayPhrases,
+    setAllPhrases([
+      ...allPhrases,
       data
     ]);
+  }
+
+  const deletePhrase = (index) => {
+
   }
 
   return (
@@ -23,14 +48,15 @@ function App() {
         <Form
           getData={getData}
         />
-        {(arrayPhrases.length === 0) ?
+        {(allPhrases.length === 0) ?
           (
             <p>No hay frases</p>
           )
           :
           (
             <ListPhrases
-              arrayPhrases={arrayPhrases}
+              allPhrases={allPhrases}
+              deletePhrase={deletePhrase}
             />
           )
         }

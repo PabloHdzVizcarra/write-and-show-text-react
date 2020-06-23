@@ -6,3 +6,11 @@ body {
 .input-text {
   padding: 2rem 0 2rem 0;
 }
+
+
+.button-delete-phrase {
+  right: 0px;
+  width: 30%;
+  margin: 0 20px 10px 0;
+  align-self: flex-end;
+}

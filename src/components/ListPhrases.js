@@ -1,16 +1,19 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Card from './Card'
 
 const ListPhrases = (props) => {
-  const { arrayPhrases } = props;
+  const { deletePhrase, allPhrases } = props;
+
 
   return (
     <div className="container">
       <h1 className="text-center mt-4">Tus Frases</h1>
-      {arrayPhrases.map((phrase) => (
+      {allPhrases.map((phrase, index) => (
         <Card
           key={phrase.id}
           phrase={phrase}
+          index={index}
+          deletePhrase={deletePhrase}
         />
       ))}
     </div>
