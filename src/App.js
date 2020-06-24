@@ -6,41 +6,49 @@ import ListPhrases from './components/ListPhrases'
 
 function App() {
 
-  const [loadPhrases, setLoadPhrases] = useState(false);
   const [allPhrases, setAllPhrases] = useState([]);
+  const [reload, setReload] = useState(false)
 
-  useEffect(() => {
-    const array = JSON.parse(localStorage.getItem('arrayText'));
-    if (array.length === 0) return;
-    setAllPhrases(array);
-  }, [])
+  // effect para verificar si tenemos frases guardadas al cargar la pagina
+  // useEffect(() => {
+  //   const array = JSON.parse(localStorage.getItem('arrayText'));
+  //   if (array.length === 0) return;
+  //   setAllPhrases([]);
+  // }, [])
 
-  useEffect(() => {
-    const array = JSON.parse(localStorage.getItem('arrayText'));
-    setAllPhrases(array);
-    setLoadPhrases(false);
+  // effect para traer todas las frases del local Storage
 
-  }, [loadPhrases])
 
   useEffect(() => {
     if (allPhrases.length === 0) return;
+    const array = JSON.parse(localStorage.getItem('arrayText'));
+    setAllPhrases(array);
+    setReload(false);
+    //eslint-disable-next-line
+  }, [reload]);
+
+  // effect para colocar las frases en el local Storage
+  useEffect(() => {
+    if (allPhrases.length === 0) return;
     localStorage.setItem('arrayText', JSON.stringify(allPhrases));
-    setLoadPhrases(true);
 
-  }, [allPhrases])
+  }, [allPhrases]);
 
+  // funcion que guarda el resultado del form
   const getData = (data) => {
     data.id = shortid.generate();
     setAllPhrases([
       ...allPhrases,
       data
     ]);
+
   }
 
   const deletePhrase = (id) => {
     const editArray = JSON.parse(localStorage.getItem('arrayText'));
     localStorage.setItem('arrayText', JSON.stringify(editArray.filter((element) => element.id !== id)));
-    setLoadPhrases(false);
+
+    setReload(true)
   }
 
   return (

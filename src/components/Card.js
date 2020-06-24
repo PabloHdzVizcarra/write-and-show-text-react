@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Card = (props) => {
-  const { phrase: { author, phrase, id }, deletePhrase, index } = props;
+  const { phrase: { author, phrase, id }, deletePhrase } = props;
 
 
   const handleClick = (e) => {
