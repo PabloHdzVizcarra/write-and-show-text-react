@@ -1,11 +1,12 @@
 import React from 'react';
 
 const Card = (props) => {
-  const { phrase: { author, phrase }, deletePhrase } = props;
+  const { phrase: { author, phrase, id }, deletePhrase, index } = props;
 
 
   const handleClick = (e) => {
     e.preventDefault();
+    deletePhrase(id);
   }
   return (
     <div className="card mb-4">

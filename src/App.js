@@ -37,8 +37,10 @@ function App() {
     ]);
   }
 
-  const deletePhrase = (index) => {
-
+  const deletePhrase = (id) => {
+    const editArray = JSON.parse(localStorage.getItem('arrayText'));
+    localStorage.setItem('arrayText', JSON.stringify(editArray.filter((element) => element.id !== id)));
+    setLoadPhrases(false);
   }
 
   return (
